@@ -1,0 +1,72 @@
+#include <iostream> 
+#include <cmath>    
+#include <iomanip>  
+#include <math.h>  
+
+using namespace std;
+
+double c1 = 0.98;
+double c2 = 0.029;
+double c3 = 1.0;
+double c4 = 0.24;
+
+double pi=3.14159265359;
+
+double g(double x) {
+    double y=0.0;
+    y = cos(2 * pi * (c3 * x - c4 * x * x));
+    return y;
+}
+
+double f(double x) {
+    double y=0.0;
+    y = exp(-1 * x) * sin (2 * pi * (c1 * x - c2 * x * x + 2 * g(x)));
+    return y;
+}
+
+int main() {
+    int i, j, n, NMAX=20;
+    double a, b, h, A[NMAX], ER[NMAX], epsilon = 0.000001;
+    double xl, xc, xr, y1, y2, y3;
+
+    a=0.0;
+    b=1.0;
+
+    y1 = 0.5*(a + b - sqrt(3)/3.0*(b-a));
+    y2 = 0.5*(a + b + sqrt(3)/3.0*(b-a));
+    A[0] = 0.5*(b-a) * (f(y1) + f(y2));
+    ER[0] = 1.0;
+    
+    i=0;
+    n=1;
+
+    // Altera-se apenas a parte do meio para o gauss com 3 pontos
+
+    while(ER[i] > epsilon && i < NMAX) {
+        i++;
+        n = 2*n;
+        h = (b-a) / double(n);
+            
+        A[i] = 0.0;
+        for (j=0; j<n; j++) {
+            
+            xl = a + j*h;
+            xr = xl + h;
+            
+            y1 = 0.5*(xl+xr - sqrt(3/5) * (xr-xl));
+            y2 = 0.5*(xl + xr);
+            y3 = 0.5*(xl+xr + sqrt(3/5) * (xr-xl));
+            
+            A[i] = A[i] + (8.0 * f(y2) + 5.0 * (f(y1)+f(y3))) / 9.0;
+        }
+        A[i] = 0.5 * A[i] * h;
+        ER[i] = abs(A[i] - A[i-1]) / abs(A[i]);
+    }
+
+    cout << "k;A(k);ER(k)" << endl;
+
+    for (j = 0; j <= i; j++) {
+        cout << setprecision(10) << j << ";" << A[j] << ";" << ER[j] << endl;
+    }
+
+}

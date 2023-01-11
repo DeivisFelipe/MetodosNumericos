@@ -7,6 +7,10 @@
 
 using namespace std;
 
+//f(x)=ℯ^(-x) sen(2 π (1.7 x-0.91 x x+2 g(x)))
+//g(x)=cos(2 π (1.4 x-1 x x))
+// 0.2555033659831
+
 double g(double x){
     double pi = 3.14159265359;
     double c1 = 1.7;
