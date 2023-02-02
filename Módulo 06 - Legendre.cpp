@@ -102,9 +102,33 @@ int main()
         
     }
     
-    
+    for (i=0; i<N; i++) {
+        cout << "p" << i << "(x) = ";
+        for(int o= i; o>=0 ; o--){
+            if(a[o] < 0){
+                cout << setprecision(10) << a[o];
+            }else{
+                cout << setprecision(10) << "+" << a[o];
+            }
+            if(o != 0){
+                cout << "*P" << o << "(x)";
+            }
+        }
+        cout << endl;
+    }
 }
 
+// f (x) = cos {𝜋 [c1x + c2 cos (𝜋x)]}.
+/*
+double f(double x){
+    double y = 0.0, pi = 3.14159265359, z1, z2;
+    double c1 = -0.2586;
+    double c2 = 1.054;
+    z1 = c1 * x + c2 * cos(pi * x);
+    y = cos(pi * z1);
+    return y;
+}
+*/
 double f(double x){
     double y = 0.0, pi = 3.14159265359, z1, z2;
     z1 = pi*x;
