@@ -5,29 +5,34 @@
 
 using namespace std;
 
+double a = 1.198;
+double b = 5.399;
+double x0 = 1.788;
+
 double f(double y, double t){
     double z, pi = 3.14159265359;
-    z = y*(y-1.0)*(y-2.0) + sin(pi*t);
+    z = 2.0*y*(a - y) + sin(b*pi*t);
     return z;
 }
 
 int main()
 {
-    int N = 20, i, j, k;
+    int N = 2, i, j, k;
     double y[N+1], t[N+1], h, a, b, pi = 3.14159265359;
     
     a = 0.0;
-    b = 10.0;
+    b = 2.0;
     h = (b-a)/double(N);
     
     for(i = 0; i <= N; i++){
         t[i] = a + i*h;
     }
     
-    y[0] = 0.5;
+    y[0] = x0;
     
     for(i = 0; i<N; i++){
-        y[i+1] = y[i] + h * f(y[i], t[i]) + 0.5*h*h*(f(y[i], t[i])*(3.0*y[i]*y[i] - 6.0*y[i] + 2.0)+pi*cos(pi*t[i]));
+        //y[i+1] = y[i] + h * f(y[i], t[i]) + 0.5*h*h* (f(y[i], t[i])*(2.0*(a - 2.0*y[i]))+(b*pi*cos(b*pi*t[i])));
+        y[i+1] = y[i+1] = y[i] + h * f(y[i], t[i]) + 0.5 * h * h * (((2.0 * (-2.0 * y[i] + a)) * f(y[i], t[i])) + (b * pi * cos(b * pi * t[i])));;
     }
     
     cout << "k\t\tt\t\ty\t\t" << endl;
